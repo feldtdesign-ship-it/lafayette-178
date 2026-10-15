@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jewel Box</title>
+<meta name="description" content="PJ O'Rourke II at 178 Lafayette Street: a 705 square foot storefront between Grand and Broome, SoHo, with the shop drawn inside it. Prints on one wall, tees on the other, Gumbit in the window. The building, the space, the store, the work.">
+<meta name="theme-color" content="#141210">
+<link rel="canonical" href="https://feldtdesign-ship-it.github.io/lafayette-178/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="178 Lafayette Street · PJ O'Rourke II">
+<meta property="og:description" content="PJ O'Rourke II at 178 Lafayette Street: a 705 square foot storefront between Grand and Broome, SoHo, with the shop drawn inside it. Prints on one wall, tees on the other, Gumbit in the window. The building, the space, the store, the work.">
+<meta property="og:url" content="https://feldtdesign-ship-it.github.io/lafayette-178/">
+<meta property="og:image" content="https://feldtdesign-ship-it.github.io/lafayette-178/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="178 Lafayette Street · PJ O'Rourke II">
+<meta name="twitter:description" content="PJ O'Rourke II at 178 Lafayette Street: a 705 square foot storefront between Grand and Broome, SoHo, with the shop drawn inside it. Prints on one wall, tees on the other, Gumbit in the window. The building, the space, the store, the work.">
+<meta name="twitter:image" content="https://feldtdesign-ship-it.github.io/lafayette-178/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#141210;--card:#1E1B18;--card2:#262320;--rule:#33302B;--ink:#F3EDE3;--ink-2:#C9C2B6;--muted:#8A857C;--f:#2DBE6C;--six:#00933C;--jz:#B07A3E;--bd:#FF6319;--c:#FCCC0A;--l:#6B6660;--amber:#FCCC0A;--rain:#5A8FC7;--cold:#7FA0C4;--snow:#B9BEC4;--heat:#E2562A;--opsz:72;--w:700;
+ --disp:"Bricolage Grotesque","Arial Narrow",sans-serif;--body:"Figtree",system-ui,-apple-system,sans-serif;--mono:"DM Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;overflow-x:hidden}
+#stage{position:fixed;inset:0;z-index:0} #stage canvas{display:block}
+#poster{position:fixed;inset:0;z-index:0;display:none} #poster img{width:100%;height:100%;object-fit:cover}
+body.fallback #poster{display:block} body.fallback #stage{display:none}
+#scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(20,18,16,.70) 0%,rgba(20,18,16,.38) 26%,rgba(20,18,16,0) 48%,rgba(20,18,16,0) 100%);transition:background .5s}
+#scrim.flip{background:linear-gradient(270deg,rgba(20,18,16,.70) 0%,rgba(20,18,16,.38) 26%,rgba(20,18,16,0) 48%,rgba(20,18,16,0) 100%)}
+#scrim.top{background:linear-gradient(180deg,rgba(20,18,16,.92) 0%,rgba(20,18,16,.55) 40%,rgba(20,18,16,0) 75%)}
+#bar{position:fixed;left:0;top:0;height:3px;background:var(--f);z-index:6;width:0}
+#load{position:fixed;inset:0;z-index:9;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);transition:opacity .6s}
+#load.done{opacity:0;pointer-events:none}
+#load .track{width:200px;height:2px;background:var(--rule)} #load .fill{height:100%;width:0;background:var(--f);transition:width .2s}
+#mast{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;padding:16px 24px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);pointer-events:none}
+#mast b{color:var(--ink);font-weight:700} #mast a{pointer-events:auto;color:var(--f);text-decoration:none}
+#rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:12px}
+#rail a{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;justify-content:flex-end}
+#rail a .dot{width:9px;height:9px;border:1.5px solid var(--muted)}
+#rail a.on{color:var(--f)} #rail a.on .dot{background:var(--f);border-color:var(--f)}
+#rail a .lbl{opacity:0;transition:opacity .2s} #rail a:hover .lbl,#rail a.on .lbl{opacity:1}
+#cap{position:fixed;left:24px;bottom:18px;z-index:5;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);max-width:60vw}
+#meter{position:fixed;right:24px;bottom:18px;z-index:5;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--f);opacity:0;transition:opacity .4s}
+#meter b{font-family:var(--disp);font-size:34px;font-weight:800;letter-spacing:0;font-variant-numeric:tabular-nums;color:var(--f)}
+#meter.on{opacity:1}
+#num{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;pointer-events:none;font-family:var(--disp);font-weight:800;font-size:min(58vh,44vw);line-height:.8;color:var(--f);opacity:0;transition:opacity .6s,color .6s;font-optical-sizing:none;font-variation-settings:"opsz" var(--opsz),"wght" 800;letter-spacing:-.04em;mix-blend-mode:screen}
+#num.on{opacity:.16}
+main#dossier{position:relative;z-index:2}
+main#dossier section{min-height:100vh;display:flex;align-items:center;padding:80px 24px}
+.wrap{width:min(500px,84vw)} .wrap.right{margin-left:auto}
+.card{background:rgba(30,27,24,.66);backdrop-filter:blur(5px);border-top:3px solid var(--f);padding:24px 26px}
+.card.slim{background:rgba(30,27,24,.5);backdrop-filter:blur(3px)}
+.card.slim p{font-size:15.5px}
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:14px}.strip img{width:100%;aspect-ratio:11/14;object-fit:cover;border:1px solid var(--ink)}
+.card.jz{border-top-color:var(--jz)} .card.bd{border-top-color:var(--bd)} .card.grey{border-top-color:var(--l)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(76px,12vw,180px);line-height:.86;letter-spacing:-.02em;margin:0 0 20px;font-optical-sizing:none;font-variation-settings:"opsz" var(--opsz),"wght" var(--w);color:var(--ink);text-wrap:balance}
+h1 em{font-style:normal;font-weight:300;color:var(--f)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(42px,6vw,70px);line-height:.94;letter-spacing:-.015em;margin:0 0 14px;font-optical-sizing:none;font-variation-settings:"opsz" var(--opsz),"wght" 600;text-wrap:balance}
+h2 em{font-style:normal;font-weight:300;color:var(--ink-2)}
+.f{color:var(--f)} .jz{color:var(--jz)} .bd{color:var(--bd)} .c{color:var(--c)}
+p{margin:0 0 12px;max-width:54ch} .lede{font-size:19px;color:var(--ink-2)}
+b{font-weight:600;color:var(--ink)}
+.rows{display:flex;flex-direction:column;gap:0;margin:16px 0 0;padding:0;border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:14.5px}
+.row dt{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0} .row dd{margin:0;color:var(--ink-2)}
+.big{font-family:var(--disp);font-weight:700;font-size:clamp(64px,9vw,120px);line-height:.85;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:6px 0 8px;font-optical-sizing:none;font-variation-settings:"opsz" var(--opsz),"wght" 700}
+.big small{font-family:var(--body);font-weight:500;font-size:16px;letter-spacing:0;color:var(--ink-2);margin-left:8px}
+.reg{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:14px;font-family:var(--mono)}
+.reg th{font-weight:400;text-align:left;color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 8px 6px 0;border-bottom:1px solid var(--rule)}
+.reg td{padding:7px 8px 7px 0;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
+.reg td.v{color:var(--f);font-weight:500} .reg td.q{color:var(--muted)}
+.cta{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--f);text-decoration:none;border-bottom:1px solid var(--f);padding-bottom:2px}
+footer{position:relative;z-index:3;background:var(--paper);padding:40px 24px 60px;font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
+footer .wrap{width:min(720px,90vw)}
+/* ---- part two ---- */
+#divider{position:relative;z-index:3;background:var(--paper);padding:120px 24px 40px;text-align:center}
+#divider .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#divider h2{font-size:clamp(56px,9vw,120px);line-height:.9;margin:10px 0 0;letter-spacing:-.02em}
+body.numbers-on #mast,body.numbers-on #rail,body.numbers-on #cap,body.numbers-on #meter,body.numbers-on #num,body.numbers-on #scrim{opacity:0;pointer-events:none;transition:opacity .4s}
+#numbers{position:relative;z-index:3;background:var(--paper);color:var(--ink);margin-top:-1px}
+#numbers main{max-width:1120px;margin:0 auto;padding:22px 24px 90px;display:flex;flex-direction:column;gap:72px}
+#numbers h2{font-size:54px;line-height:.95;margin:0 0 14px}
+#numbers h2 small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;font-weight:400}
+#numbers p{max-width:64ch} #numbers p+p{margin-top:12px}
+#numbers a{color:var(--f)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--f);outline-offset:3px}
+.mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:12px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);flex-wrap:wrap;gap:8px}
+.mast .clock{color:var(--f)}
+.scrub{position:sticky;top:0;z-index:5;background:linear-gradient(var(--paper) 85%,transparent);padding:12px 0 18px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center}
+.scrub .lab{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.scrub .lab b{color:var(--f);display:block;font-size:22px;letter-spacing:0;text-transform:none;font-family:var(--disp);font-weight:700}
+.scrub input[type=range]{width:100%;accent-color:var(--f);height:28px;cursor:ew-resize}
+.scrub button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:8px 12px;cursor:pointer;white-space:nowrap}
+.scrub button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.scrub .days{display:flex;gap:4px}
+.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px;align-items:end}
+.hero .bigN{font-family:var(--disp);font-weight:800;font-size:clamp(110px,19vw,232px);line-height:.82;color:var(--f);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hero .unit{font-family:var(--disp);font-style:normal;font-weight:300;font-size:clamp(26px,3.4vw,40px);line-height:1;margin-top:8px}
+.hero .sub{color:var(--ink-2);margin-top:10px;max-width:54ch}
+.doors{display:flex;flex-direction:column;gap:2px;background:var(--rule)}
+.doors div{background:var(--card);padding:18px 20px}
+.doors div.a{border-top:3px solid var(--jz)} .doors div.b{border-top:3px solid var(--l)}
+.doors .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.doors .v{font-family:var(--disp);font-weight:800;font-size:64px;line-height:1;margin:8px 0 4px;font-variant-numeric:tabular-nums}
+.doors .a .v{color:var(--jz)} .doors .b .v{color:var(--ink-2)}
+.doors .v span{font-size:18px;font-family:var(--body);font-weight:500;color:var(--ink)}
+.doors .t{font-size:14.5px;color:var(--ink-2)}
+.panel{background:var(--card);border-top:3px solid var(--f);padding:18px}
+svg{display:block;width:100%;height:auto}
+.ax{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.grid{stroke:var(--rule);stroke-width:1}
+.river .l{fill:var(--f);opacity:.85} .river .a{fill:var(--jz);opacity:.95}
+.river .cur{stroke:var(--ink);stroke-width:1.5;opacity:.7}
+.legend{display:flex;gap:18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-top:10px;flex-wrap:wrap}
+.legend i{display:inline-block;width:14px;height:10px;vertical-align:middle;margin-right:6px}
+.legend i.l{background:var(--f)} .legend i.a{background:var(--jz)} .legend i.c{background:var(--l)} .legend i.bd{background:var(--bd)} .legend i.y{background:var(--c)}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:10px}
+.readout div{border-top:1px solid var(--rule);padding-top:8px}
+.readout .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.readout .v{font-family:var(--disp);font-size:34px;font-weight:800;line-height:1;margin-top:4px;font-variant-numeric:tabular-nums}
+.heat{display:grid;grid-template-columns:44px 1fr;gap:6px 8px;align-items:center;margin-top:18px}
+.heat .row{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;border:0;padding:0}
+.heat .cell{aspect-ratio:1/1.15;background:var(--f);transition:transform .12s}
+.heat .cell:hover{transform:scale(1.35);outline:1px solid var(--ink);z-index:2;position:relative}
+.heat .cell.now{outline:1px solid var(--ink)}
+.heat .d{font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:.08em}
+.heat .hrs{grid-column:2;display:grid;grid-template-columns:repeat(24,1fr);font-family:var(--mono);font-size:10px;color:var(--muted)}
+.heat .hrs span:nth-child(3n+2),.heat .hrs span:nth-child(3n+3){visibility:hidden}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;padding:6px 9px;z-index:9;white-space:nowrap;display:none}
+.multi .y{fill:none;stroke-width:2} .multi .y.f{stroke:var(--f)} .multi .y.jz{stroke:var(--jz)} .multi .y.bd{stroke:var(--bd)} .multi .y.c{stroke:var(--c)}
+.multi .ylab{font-family:var(--disp);font-weight:700;font-size:15px} .multi .ylab.f{fill:var(--f)} .multi .ylab.jz{fill:var(--jz)} .multi .ylab.bd{fill:var(--bd)} .multi .ylab.c{fill:var(--c)}
+.wx .dot{fill:var(--ink-2);opacity:.45;transition:opacity .2s,fill .2s}
+.wx.mode-rain .dot.rain{fill:var(--rain);opacity:1} .wx.mode-snow .dot.snow{fill:var(--snow);opacity:1} .wx.mode-cold .dot.cold{fill:var(--cold);opacity:1} .wx.mode-hot .dot.hot{fill:var(--heat);opacity:1}
+.wx.mode-rain .dot:not(.rain),.wx.mode-snow .dot:not(.snow),.wx.mode-cold .dot:not(.cold),.wx.mode-hot .dot:not(.hot){opacity:.12}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.modes button{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:7px 12px;cursor:pointer}
+.modes button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.finding{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:baseline;margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+.finding .v{font-family:var(--disp);font-size:56px;font-weight:800;line-height:1;color:var(--f);font-variant-numeric:tabular-nums;min-width:120px}
+.finding .t{color:var(--ink-2)}
+.cmp{display:flex;flex-direction:column;gap:2px;background:var(--rule);margin-top:18px}
+.cmp div{background:var(--card);padding:14px 18px;display:grid;grid-template-columns:190px 1fr;gap:12px;align-items:baseline;color:var(--ink-2)}
+.cmp .k{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.bars{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;align-items:end;height:90px;margin-top:14px}
+.bars i{display:block;background:var(--l);min-height:2px}
+.bars i.now{background:var(--f)}
+.cams{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+.cams .c img{width:100%;aspect-ratio:352/240;object-fit:cover;display:block;border:1px solid var(--rule);background:#000}
+.cams .cap{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.45;margin-top:8px}
+.cams .cap b{color:var(--ink);font-weight:700}
+.buy{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;background:var(--rule);margin-top:18px}
+.buy div{background:var(--card);padding:20px} .buy div.pick{border-top:3px solid var(--f)}
+.buy .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.buy h3{font-family:var(--disp);font-size:30px;font-weight:600;margin:8px 0 4px;line-height:1}
+.buy .cost{font-family:var(--disp);font-size:44px;font-weight:800;line-height:1;color:var(--f);margin:8px 0 4px}
+.buy .cost small{font-size:16px;font-family:var(--body);font-weight:500;color:var(--ink);margin-left:4px}
+.buy .t{font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.caveat{border-left:3px solid var(--f);padding:4px 0 4px 16px;color:var(--ink-2);font-size:15.5px}
+.src{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--rule);padding-top:14px}
+.src a{color:var(--ink-2)}
+.mapwrap{background:var(--card);border:1px solid var(--rule);padding:12px;margin-top:18px}
+@media (max-width:760px){#rail{display:none}#scrim,#scrim.flip{background:linear-gradient(0deg,rgba(20,18,16,.94) 12%,rgba(20,18,16,.5) 62%,rgba(20,18,16,.15))}#cap{max-width:70vw;font-size:10px}.wrap.right{margin-left:0}#num{font-size:44vw}.hero{grid-template-columns:1fr}.scrub{grid-template-columns:1fr}.cmp div{grid-template-columns:1fr}#numbers h2{font-size:40px}.row{grid-template-columns:110px 1fr}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}#num,#meter,#scrim{transition:none}*{transition:none!important}}
+</style></head><body>
+<div id="load"><div>Loading Lafayette Street</div><div class="track"><div class="fill" id="fill"></div></div></div>
+<div id="stage"></div>
+<div id="poster"><img src="frames/map_axon_web.jpg" alt="Axonometric of the blocks around 178 Lafayette Street"></div>
+<div id="scrim"></div><div id="bar"></div>
+<div id="num">178</div>
+<div id="mast"><div><b>178 LAFAYETTE STREET</b> &nbsp;/&nbsp; PJ O'Rourke II, SoHo</div><div><a href="PJ_ORourke_II_178_Lafayette.pdf">The PDF ↓</a></div></div>
+<nav id="rail">
+<a href="#s0"><span class="lbl">The block</span><span class="dot"></span></a>
+<a href="#s1"><span class="lbl">The building</span><span class="dot"></span></a>
+<a href="#s2"><span class="lbl">The space</span><span class="dot"></span></a>
+<a href="#s3"><span class="lbl">The store</span><span class="dot"></span></a>
+<a href="#s4"><span class="lbl">The work</span><span class="dot"></span></a>
+<a href="#s5"><span class="lbl">The business</span><span class="dot"></span></a>
+<a href="#s6"><span class="lbl">Why here</span><span class="dot"></span></a>
+</nav>
+<div id="cap"></div>
+<div id="meter" style="display:none"><b id="m-v">0</b></div>
+<main id="dossier">
+<section id="s0" data-cap="__NBLDG__ buildings / NYC footprints at recorded roof heights / __NTREES__ street trees / the store drawn from the plan and the photograph" data-num="">
+<div class="wrap"><div class="eyebrow">PJ O'Rourke II / 178 Lafayette Street</div>
+<h1>Jewel<br><em>box</em></h1>
+<p class="lede">A 705 square foot storefront on Lafayette Street between Grand and Broome, with a cellar under it, and PJ O'Rourke II's shop inside: prints on one wall, tees on the other, Gumbit in the window. Every building here is real, at its recorded height.</p>
+<p style="font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">Scroll.</p></div></section>
+
+<section id="s1" data-cap="BBL 1004730044 / built 1906 / 6 storeys / 25 ft front / SoHo-Cast Iron Historic District Extension" data-num="178" data-numc="f">
+<div class="wrap right"><div class="card slim"><div class="eyebrow">The building</div>
+<h2>A 1906 <em>walk-up</em></h2>
+<p>Cream brick, a red fire escape down the front, three windows a floor, six floors. The laundromat at 176 on one side, the red cast-iron front of 180 on the other. The shop is the whole ground floor but for the apartment door beside it.</p>
+<dl class="rows">
+<div class="row"><dt>Lot</dt><dd><b>25 ft on Lafayette × 100 ft deep</b>, building 25 × 85 ft, roof 63 ft · city outline</dd></div>
+<div class="row"><dt>District</dt><dd>SoHo-Cast Iron Historic District Extension · M1-5/R7X, SoHo-NoHo special district</dd></div>
+<div class="row"><dt>Trains</dt><dd>Canal Street and Spring Street on the 6, each about <b>four minutes</b> · Canal Street N Q R W J Z five · Prince Street R W seven</dd></div>
+</dl></div></div></section>
+
+<section id="s2" data-cap="The space / 18 ft 2 in × 25 ft sales room / bath and stair behind / cellar 13 ft 11 in × 41 ft 4 in / white box, HVAC" data-num="705" data-numc="f">
+<div class="wrap"><div class="card"><div class="eyebrow">The space</div>
+<div class="big f">705<small>square feet on the ground, plus the cellar</small></div>
+<h2>One clean <em>room</em></h2>
+<p>Eighteen feet two inches wide, twenty-five deep, under a white pressed-tin ceiling with ten bare bulbs. Pale grey tile, white walls. Behind the room a bath and the stair down to the cellar for stock. The storefront is one run of black steel: a display window, a pair of glass doors, a second display window, vents above and a plain black fascia ready for one name.</p>
+<dl class="rows">
+<div class="row"><dt>Sales room</dt><dd><b>18'-2" × 25'-0"</b> · ceiling about 10'-6"</dd></div>
+<div class="row"><dt>Cellar</dt><dd><b>13'-11" × 41'-4"</b>, dedicated, by the stair at the back</dd></div>
+<div class="row"><dt>Delivery</dt><dd>White box with HVAC in place</dd></div>
+</dl></div></div></section>
+
+<section id="s3" data-cap="The store / prints south / pipe-and-plank north / two oak tables / Gumbit in the north window / Galaga in the corner" data-num="" data-numc="f">
+<div class="wrap right"><div class="card slim"><div class="eyebrow">The store</div>
+<h2>Prints, tees, <em>the figure</em></h2>
+<p>The south wall is the gallery: his line drawings of New York in one level row of black frames. The north wall is matte black pipe and white oak plank, folded tees above, a rail of hangers below, one colourway to a bay. Two oak tables carry the drop. Gumbit stands four feet tall on a black plinth in the north window, facing the street. A Galaga cabinet sits kitty-corner at the back.</p>
+</div></div></section>
+
+<section id="s4" data-cap="The work / hand-drawn prints / heavyweight garment-dyed tees in five colourways / the Gumbit figure" data-num="" data-numc="f">
+<div class="wrap"><div class="card"><div class="eyebrow">The work</div>
+<h2>Drawn by hand, <em>printed in New York</em></h2>
+<p>Graphic tees on a 7.5 ounce USA-cotton blank in cream, navy, lilac, moss and peach, crop tees, hoodies and bombers. Art prints in two sizes. Gumbit, the bubblegum-pink suit-and-tie character, going from the drawings to a small collectible edition. Kids sizes already in the line. Everything carries the signature.</p>
+<div class="strip"><img src="pdf/img/art_01.jpg" alt=""><img src="pdf/img/art_02.jpg" alt=""><img src="pdf/img/art_03.jpg" alt=""><img src="pdf/img/art_04.jpg" alt=""><img src="pdf/img/art_05.jpg" alt=""><img src="pdf/img/art_06.jpg" alt=""><img src="pdf/img/art_07.jpg" alt=""></div>
+</div></div></section>
+
+<section id="s5" data-cap="PJ O'Rourke II / selling directly to New York since 26 September 2012 / 85.8K on Instagram" data-num="2012" data-numc="f">
+<div class="wrap right"><div class="card"><div class="eyebrow">The business</div>
+<h2>Fourteen years <em>underground and up</em></h2>
+<p>On September 26, 2012, PJ O'Rourke II wheeled a hand-built art cart onto an MTA subway platform and started selling his prints to whoever walked past. No connections, no capital, no permission. Eight years underground, then pop-ups in DUMBO from 2014, the prints becoming apparel on a used heat press, and in 2019 the first storefront in the East Village at 11th Street and First Avenue.</p>
+<dl class="rows">
+<div class="row"><dt>Audience</dt><dd><b>85,800</b> on Instagram, @pjorourkeii</dd></div>
+<div class="row"><dt>First sale</dt><dd>A subway platform, 2012</dd></div>
+<div class="row"><dt>First store</dt><dd>East Village, 2019</dd></div>
+<div class="row"><dt>Online</dt><dd>pjorourkeii.com</dd></div>
+</dl></div></div></section>
+
+<section id="s6" data-cap="Why here / SoHo meets Nolita / the 6 four minutes away / a landmarked front / a window that is the sign" data-num="" data-numc="f">
+<div class="wrap"><div class="card"><div class="eyebrow">Why 178 Lafayette</div>
+<h2>Small, bright, <em>on the right street</em></h2>
+<p>Lafayette is the seam between the cast-iron district and the little streets east of it; the SoHo shopper walks east, the Nolita local walks west. A 700 square foot flagship on a corridor people already walk is the format PJ has proved for a decade: tight, curated, the stock downstairs and the window doing the work. The room needs almost nothing done to it; the fit-out is freestanding. In and trading fast.</p>
+<dl class="rows">
+<div class="row"><dt>Hours</dt><dd>Seven days, late on Thursday, Friday and Saturday</dd></div>
+<div class="row"><dt>Events</dt><dd>Print releases, tee drops, artist nights; the room clears to a gallery in an hour</dd></div>
+<div class="row"><dt>Contact</dt><dd><b>PJ O'Rourke II</b> · pjorourkeii.com · @pjorourkeii</dd></div>
+</dl>
+<a class="cta" href="PJ_ORourke_II_178_Lafayette.pdf">The six-page PDF ↓</a></div></div></section>
+</main>
+<footer><div class="wrap"><p>Model built from NYC Open Data: building footprints with recorded roof heights, planimetric roadbed, sidewalk and median polygons, street centerline names, and the street tree census. Lot matched by BBL. The store is drawn from the broker's plan and the interior photograph; the fit-out is PJ O'Rourke II's. Made __TODAY__.</p></div></footer>
+<div id="numbers"></div>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.161.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.161.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+const MODEL='assets/lafayette_178.glb';
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const loadEl=document.getElementById('load'), fillEl=document.getElementById('fill');
+// glTF space: x east, y up, z south.
+const P=__POINTS__; const DOOR=P.door, N=P.facing;   // N = the way the storefront faces, out over Lafayette (glTF x east, z south)
+ const G=k=>[P[k][0],0,-P[k][1]], BOW=G('canal_6'), SPR=G('spring_6'), GRD=G('canal_rw'); const MID=[(BOW[0]+SPR[0]+GRD[0])/3,0,(BOW[2]+SPR[2]+GRD[2])/3];
+const S=[-N[1],0,N[0]];   // along the street, glTF
+const WP=[
+ {p:[330,470,330],t:[0,8,0],s:250,o:0},                                                                   // s0 wide, the blocks
+ {p:[DOOR[0]+N[0]*60-S[0]*30,70,DOOR[2]+N[1]*60-S[2]*30],t:[DOOR[0],9,DOOR[2]],s:26,o:-.40},              // s1 the building, from over Lafayette (card right, picture left)
+ {p:[DOOR[0]+N[0]*20+S[0]*6,7,DOOR[2]+N[1]*20+S[2]*6],t:[DOOR[0],2.8,DOOR[2]],s:11,o:.44},                // s2 the space, from the roadway, square on the glass (card left, picture right)
+ {p:[DOOR[0]+N[0]*18+S[0]*12,5,DOOR[2]+N[1]*18+S[2]*12],t:[DOOR[0]-N[0]*3+S[0]*2,1.8,DOOR[2]-N[1]*3+S[2]*2],s:7,o:-.42}, // s3 the store, through the north window (the statue) from the roadway
+ {p:[DOOR[0]+N[0]*18-S[0]*12,5,DOOR[2]+N[1]*18-S[2]*12],t:[DOOR[0]-N[0]*4-S[0]*3,1.8,DOOR[2]-N[1]*4-S[2]*3],s:7,o:.44},   // s4 the work, through the south window (the print wall) from the roadway
+ {p:[DOOR[0]+N[0]*90+S[0]*60,120,DOOR[2]+N[1]*90+S[2]*60],t:[DOOR[0]-N[0]*10,12,DOOR[2]-N[1]*10],s:60,o:-.40}, // s5 the business, the block from the Grand St corner
+ {p:[MID[0]+140,560,MID[2]+140],t:[MID[0]*0.5,0,MID[2]*0.5],s:300,o:0},                                   // s6 why here, from above with the stations
+ {p:[420,560,420],t:[0,8,0],s:320,o:0}];                                                                  // out
+                                              // s7 wide, out
+let renderer,scene,cam,ready=false;
+function fail(m){console.warn('3D unavailable:',m);document.body.classList.add('fallback');loadEl.classList.add('done');}
+try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){fail(e);}
+if(renderer){
+ renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+ renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ document.getElementById('stage').appendChild(renderer.domElement);
+ scene=new THREE.Scene(); scene.background=new THREE.Color(0x141210); scene.fog=new THREE.Fog(0x141210,900,2200);
+ cam=new THREE.OrthographicCamera(-1,1,1,-1,-3000,6000);
+ scene.add(new THREE.HemisphereLight(0xfff1e0,0x1a1816,0.9));
+ const key=new THREE.DirectionalLight(0xffe2c4,2.2); key.position.set(-260,420,200); key.castShadow=true; key.shadow.mapSize.set(2048,2048); key.shadow.bias=-0.0006; key.shadow.normalBias=1.2;
+ const c=key.shadow.camera; c.left=-500;c.right=500;c.top=500;c.bottom=-500;c.near=1;c.far=1400; scene.add(key);
+ const fl=new THREE.DirectionalLight(0xc9d6ff,0.4); fl.position.set(320,200,-280); scene.add(fl);
+ const draco=new DRACOLoader(); draco.setDecoderPath('https://unpkg.com/three@0.161.0/examples/jsm/libs/draco/gltf/');
+ const loader=new GLTFLoader(); loader.setDRACOLoader(draco);
+ loader.load(MODEL,(g)=>{
+  g.scene.traverse(o=>{ if(!o.isMesh)return; const m=o.material; if(m){m.roughness=1;m.metalness=0;m.flatShading=true;}
+   const n=o.name.toUpperCase();
+   if(n.startsWith('SOHO_MASSING')){o.castShadow=true;o.receiveShadow=true;if(m)m.color=new THREE.Color(0x302C28);}
+   else if(n.startsWith('SITE_178')||n.startsWith('B178_LAFAYETTE_CREAM')||n.startsWith('B178_LAFAYETTE_BULKHEAD')){o.castShadow=true;if(m){m.color=new THREE.Color(0xD9CBA8);m.emissive=new THREE.Color(0xD9CBA8);m.emissiveIntensity=.32;}}
+   else if(n.startsWith('SITE_176')||n.startsWith('B176_LAFAYETTE_REDBRICK')){o.castShadow=true;if(m){m.color=new THREE.Color(0x7E4A3A);m.emissive=new THREE.Color(0x7E4A3A);m.emissiveIntensity=.22;}}
+   else if(n.startsWith('SITE_180')||n.startsWith('B180_LAFAYETTE_TAN')){o.castShadow=true;if(m){m.color=new THREE.Color(0xB89B72);m.emissive=new THREE.Color(0xB89B72);m.emissiveIntensity=.26;}}
+   else if(n.startsWith('B180_LAFAYETTE_CASTIRON')){if(m){m.color=new THREE.Color(0x8E2F2A);m.emissive=new THREE.Color(0x8E2F2A);m.emissiveIntensity=.3;}}
+   else if(n.startsWith('B178_LAFAYETTE_FIRE')){if(m){m.color=new THREE.Color(0x7A2A24);m.emissive=new THREE.Color(0x7A2A24);m.emissiveIntensity=.3;}}
+   else if(n.includes('_SHOPGLASS')){if(m){m.color=new THREE.Color(0x2DBE6C);m.emissive=new THREE.Color(0x2DBE6C);m.emissiveIntensity=.55;m.transparent=true;m.opacity=.28;m.depthWrite=false;}}
+   else if(n.startsWith('B178_IN_WHITE')||n.startsWith('B178_IN_TIN')){o.receiveShadow=true;if(m){m.color=new THREE.Color(0xECEAE4);m.emissive=new THREE.Color(0xECEAE4);m.emissiveIntensity=.45;}}
+   else if(n.startsWith('B178_IN_FLOOR')){o.receiveShadow=true;if(m){m.color=new THREE.Color(0x9A9A96);m.emissive=new THREE.Color(0x9A9A96);m.emissiveIntensity=.3;}}
+   else if(n.startsWith('B178_IN_')){if(m){m.color=new THREE.Color(0x3A3C40);m.emissive=new THREE.Color(0x3A3C40);m.emissiveIntensity=.2;}}
+   else if(n.startsWith('UNIT_PLANK')||n.startsWith('TBL_TOP')||n.startsWith('WRAP_TOP')){if(m){m.color=new THREE.Color(0x9A7549);m.emissive=new THREE.Color(0x9A7549);m.emissiveIntensity=.35;}}
+   else if(n.startsWith('UNIT_')||n.startsWith('TBL_LEG')||n.startsWith('GAL_FR')){if(m){m.color=new THREE.Color(0x1A1A1A);}}
+   else if(n.startsWith('GAL_MAT')){if(m){m.color=new THREE.Color(0xE6E1D3);m.emissive=new THREE.Color(0xE6E1D3);m.emissiveIntensity=.5;}}
+   else if(n.startsWith('GAL_PRINT')){if(m){m.emissive=new THREE.Color(0xFFFFFF);m.emissiveIntensity=.35;m.emissiveMap=m.map||null;}}
+   else if(n.startsWith('PLINTH_')||n.startsWith('PEDESTAL_')||n.startsWith('WRAP_BODY')){if(m){m.color=new THREE.Color(0x0E0E0E);}}
+   else if(n.startsWith('FOLD_')){if(m){m.emissive=m.color.clone();m.emissiveIntensity=.45;}}
+   else if(n.startsWith('B178_')||n.startsWith('B176_')||n.startsWith('B180_')){if(m){m.color=new THREE.Color(0x121212);m.transparent=false;m.opacity=1;}}
+   else if(n.startsWith('TREES')){o.castShadow=true;if(m)m.color=new THREE.Color(0x4A5A3A);}
+   else if(n.startsWith('GROUND')||n.startsWith('PLANE')){o.receiveShadow=true;if(m)m.color=new THREE.Color(0x141210);}
+   else if(n.startsWith('ROADBED')){o.receiveShadow=true;if(m)m.color=new THREE.Color(0x1C1A18);}
+   else if(n.startsWith('SIDEWALK')){o.receiveShadow=true;if(m)m.color=new THREE.Color(0x2B2823);}
+   else if(n.startsWith('ST_')){if(m)m.color=new THREE.Color(0x8A857C);}
+   else {o.receiveShadow=true;} });
+  scene.add(g.scene); ready=true; window.__ready=true; loadEl.classList.add('done'); onScroll();
+ },(ev)=>{ if(ev.total) fillEl.style.width=(ev.loaded/ev.total*100).toFixed(0)+'%'; },(err)=>fail(err));
+ const state={p:new THREE.Vector3(),t:new THREE.Vector3(),s:250,o:0}, goal={p:new THREE.Vector3(),t:new THREE.Vector3(),s:250,o:0};
+ const secs=[...document.querySelectorAll('main#dossier section')], links=[...document.querySelectorAll('#rail a')];
+ const cap=document.getElementById('cap'), bar=document.getElementById('bar'), scrim=document.getElementById('scrim'), num=document.getElementById('num'), meter=document.getElementById('meter'), mv=document.getElementById('m-v');
+ let shown=-1; const mult=()=>innerWidth<760?1.5:1; const lerp=(a,b,t)=>a+(b-a)*t; const smooth=t=>t*t*(3-2*t);
+ const MONTHS=__DARKMAX__;
+ function onScroll(){
+  const dm=document.getElementById('dossier'); const max=dm.offsetTop+dm.offsetHeight-innerHeight; const t=max>0?Math.min(1,Math.max(0,scrollY/max)):0;
+  const nb=document.getElementById('numbers').getBoundingClientRect().top; document.body.classList.toggle('numbers-on', nb<innerHeight*0.5); window.__numbersOn = nb<innerHeight*0.5;
+  bar.style.width=(t*100).toFixed(2)+'%';
+  const yc=scrollY+innerHeight*0.5, cs=secs.map(x=>x.offsetTop+dm.offsetTop+x.offsetHeight/2); let k=0; while(k<cs.length-2&&yc>=cs[k+1])k++;
+  const seg=Math.min(WP.length-1,Math.max(0,k+(yc-cs[k])/(cs[k+1]-cs[k]))), i=Math.min(WP.length-2,Math.floor(seg)), f=smooth(seg-i), a=WP[i], b=WP[i+1];   // camera follows the sections, not raw scroll distance
+  goal.p.set(lerp(a.p[0],b.p[0],f),lerp(a.p[1],b.p[1],f),lerp(a.p[2],b.p[2],f));
+  goal.t.set(lerp(a.t[0],b.t[0],f),lerp(a.t[1],b.t[1],f),lerp(a.t[2],b.t[2],f));
+  goal.s=lerp(a.s,b.s,f)*mult(); goal.o=innerWidth<760?0:lerp(a.o,b.o,f);
+  const close=1-Math.min(1,Math.max(0,(goal.s/mult()-28)/(320-28)));
+  document.documentElement.style.setProperty('--opsz',(72-60*close).toFixed(1));
+  document.documentElement.style.setProperty('--w',(700+100*close).toFixed(0));
+  if(reduced){state.p.copy(goal.p);state.t.copy(goal.t);state.s=goal.s;state.o=goal.o;}
+  const mid=innerHeight*0.45; let n=0,bd=1e9;
+  secs.forEach((s,j)=>{const r=s.getBoundingClientRect(); const d=Math.abs(r.top+r.height/2-mid); if(d<bd){bd=d;n=j;}});
+  // the meter counts the months dark as the camera closes on the door (waypoints 1 to 2)
+  const w=Math.min(1,Math.max(0,(seg-1)/1)); mv.textContent=Math.round(MONTHS*w); meter.classList.toggle('on',seg>0.85&&seg<2.6);
+  if(n!==shown){shown=n; links.forEach((l,j)=>l.classList.toggle('on',j===n)); const s=secs[n]; cap.textContent=s.dataset.cap||'';
+   scrim.className=(n===6)?'top':(s.querySelector('.wrap.right')?'flip':'');
+   const nv=s.dataset.num||''; num.textContent=nv||num.textContent; num.classList.toggle('on',!!nv);
+   num.style.color='var(--'+(s.dataset.numc||'f')+')'; }
+ }
+ function frame(){ requestAnimationFrame(frame); if(!ready||window.__numbersOn)return;
+  if(!reduced){state.p.lerp(goal.p,0.07);state.t.lerp(goal.t,0.07);state.s+=(goal.s-state.s)*0.07;state.o+=(goal.o-state.o)*0.07;}
+  const a=innerWidth/innerHeight; const off=state.o*state.s*a; cam.left=-state.s*a-off; cam.right=state.s*a-off; cam.top=state.s; cam.bottom=-state.s; cam.near=state.s<20?0.5:-3000;
+  cam.position.copy(state.p); cam.up.set(0,1,0); cam.lookAt(state.t); cam.updateProjectionMatrix(); renderer.render(scene,cam); }
+ addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);onScroll();});
+ onScroll(); state.p.copy(goal.p); state.t.copy(goal.t); state.s=goal.s; state.o=goal.o; frame();
+ setTimeout(()=>{if(!ready)fail('timeout');},20000);
+}
+</script></body></html>
